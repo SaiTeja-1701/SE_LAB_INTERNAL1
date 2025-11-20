@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'MAVEN_HOME'
+    }
+
+    stages {
+
+        stage('Git Clone & Clean') {
+            steps {
+                bat "git clone https://github.com/SaiTeja-1701/maven-web-demo.git"
+                bat "mvn clean -f maven-web-demo/pom.xml"
+            }
+        }
+
+        stage('Install') {
+            steps {
+                bat "mvn install -f maven-web-demo/pom.xml"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat "mvn test -f maven-web-demo/pom.xml"
+            }
+        }
+
+        stage('Package') {
+            steps {
+                bat "mvn package -f maven-web-demo/pom.xml"
+            }
+        }
+    }
+}
